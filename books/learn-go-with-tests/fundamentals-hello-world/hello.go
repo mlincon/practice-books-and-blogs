@@ -15,6 +15,7 @@ const frenchHelloPrefix = "Bonjour, "
 
 // even though this is a simple hello-world exercise, we separate here the "domain"
 // from "side-effects" (i.e. printing to stdout)
+// the printing to stdout happens in the main() function
 // since the function starts with a uppercase letter, this will be public!
 func Hello(name string, language string) string {
 	if name == "" {
