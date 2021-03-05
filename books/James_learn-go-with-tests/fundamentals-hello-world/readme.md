@@ -1,3 +1,5 @@
-To run, use `go run ./hello.go`  
+Initiate first if not already done: `go mod init hello`
 
-To run unit tests, use `go test -v`  
+To run, use: `go run ./hello.go`  
+
+To run unit tests, use: `go test -v`  
