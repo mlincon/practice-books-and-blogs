@@ -13,7 +13,7 @@ from airflow.utils import dates
 # this wilöl be the starting point of thw workflow
 dag = DAG(dag_id='download_rocket_launches',
           start_date=dates.days_ago(14),
-          schedule_interval=None)
+          schedule_interval=None) # dag will not run automatically
 
 
 # use Bash command to download the URL response with curl
@@ -27,7 +27,7 @@ download_launches = BashOperator(task_id='download_launches',
 
 # another Bash operator to notify how many images have been downloaded
 notify_cmd = """
-There are now $(ls /tmp/images/ | wc -l) images.
+"There are now $(ls /tmp/images/ | wc -l) images."
 """
 notify = BashOperator(task_id='notify',
                       bash_command=notify_cmd,
@@ -54,7 +54,7 @@ def _get_pictures():
                 # the name of the image is at the very end of the URL
                 image_filename = image_url.split('/')[-1]
                 # save image
-                target_file = f'tmp/images/{image_filename}'
+                target_file = f'/tmp/images/{image_filename}'
                 with open(target_file, 'wb') as pf:
                     pf.write(response.content)
                 print(f'Download {image_url} to {target_file}')
