@@ -27,7 +27,7 @@ download_launches = BashOperator(task_id='download_launches',
 
 # another Bash operator to notify how many images have been downloaded
 notify_cmd = """
-"There are now $(ls /tmp/images/ | wc -l) images."
+echo "There are now $(ls /tmp/images/ | wc -l) images."
 """
 notify = BashOperator(task_id='notify',
                       bash_command=notify_cmd,
