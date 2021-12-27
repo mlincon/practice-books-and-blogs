@@ -35,11 +35,12 @@ notify = BashOperator(task_id='notify',
 
 
 def _get_pictures():
-    """Python function to parse response and download all rocket pictures.
+    """Python function to parse response and download all rocket pictures
+	from the json response.
     The response JSON has an array named "results". Each item in the array are
     key-value objects. The following keys are available:
     "id", "url", "launch_library_id", "name", "net", "window_end", "window_start",
-    "image", "inforgraphic" and many more
+    "image", "inforgraphic" and many more. We are interested only in key "image".
     """
     # ensure directory exists
     pathlib.Path('/tmp/images').mkdir(parents=True, exist_ok=True)
