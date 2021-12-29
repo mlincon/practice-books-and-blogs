@@ -23,7 +23,7 @@ def _processing_user(ti):
     """
     # fetch results/ the user that has been extracted from their previous task
     # i.e. the SimpleHttpOperator
-    users = ti.xcom_pull(task_id=['extracting_user'])
+    users = ti.xcom_pull(task_ids=['extracting_user'])
     
     if not len(users) or 'results' not in users[0]:
         raise ValueError('User is empty')
