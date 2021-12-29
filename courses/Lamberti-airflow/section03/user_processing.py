@@ -1,5 +1,7 @@
 from airflow.models import DAG
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
+from airflow.providers.http.sensors.http import HttpSensor
+
 from datetime import datetime
 
 # options/arguments that will be common to all the tasks in the pipeline
@@ -33,3 +35,11 @@ with DAG('user_processing',
     creating_table = SqliteOperator(task_id='creating_table',
                                     sqlite_conn_id='db_sqlite',
                                     sql=sql_command)
+
+    
+    # check if API is available
+    is_api_available = HttpSensor(task_id='is_api_available',
+                                  http_conn_id='user_api',
+                                  endpoint='api/') # the endpoint or page to check
+    
+    

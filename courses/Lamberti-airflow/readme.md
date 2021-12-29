@@ -1,4 +1,47 @@
+## Section 03
 
+Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing ~/airflow/dags`
+### Providers
+
+Additional providers
+- SQLite Provider, required for `SqliteOperator`: `pip install 'apache-airflow-providers-sqlite'`
+- Http operator, requried for `SimpleHTTPOperator`: `pip install 'apache-airflow-providers-http'`
+
+List all providers:
+```
+airflow providers list
+## package_name                    | description                                                                 | version
+## ================================+=============================================================================+========
+## apache-airflow-providers-ftp    | File Transfer Protocol (FTP) https://tools.ietf.org/html/rfc114             | 1.1.0  
+## apache-airflow-providers-http   | Hypertext Transfer Protocol (HTTP) https://www.w3.org/Protocols/            | 2.0.1  
+## apache-airflow-providers-imap   | Internet Message Access Protocol (IMAP) https://tools.ietf.org/html/rfc3501 | 1.0.1  
+## apache-airflow-providers-sqlite | SQLite https://www.sqlite.org/                                              | 1.0.2 
+```
+
+### Airflow Test
+It is recommended to test a task after creating it.
+
+###### Example: Create a user table
+Test a specific task without checking for dependencies or storing metadata using `airflow tasks test <dag-id> <task-id> <execution-date`, where the `execution-date` is a date from the past, e.g.
+```
+airflow tasks test user_processing creating_table 2021-01-01
+```
+The above task creates a table in SQLite. To check the table run
+```
+sqlite3 ~/airflow/airflow.db
+```
+Then run `.tables` to list all tables. There you will see a table named `users` has been created. Run
+```
+SELECT sql FROM sqlite_master 
+WHERE tbl_name = 'users' AND type = 'table'
+```
+to get the query used to create the table.
+
+To exit, hit `Ctrl+D`.
+
+
+
+### Connections
 List all connections
 ```
 airflow connections list
@@ -33,4 +76,12 @@ id | conn_id   | conn_type | descripti | host      | schema | login | password |
    |           |           |           | low/airfl |        |       |          |      |           |            |           | flow%2Fairf
    |           |           |           | ow.db     |        |       |          |      |           |            |           | low%2Fairfl
    |           |           |           |           |        |       |          |      |           |            |           | ow.db
+```
+
+Create a HTTP connection named `user_api`
+```
+airflow connections add user_api \
+    --conn-type http \
+    --conn-description "API for getting users" \
+    --conn-host https://randomuser.me/
 ```
