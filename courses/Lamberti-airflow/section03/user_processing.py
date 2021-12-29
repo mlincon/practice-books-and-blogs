@@ -1,5 +1,5 @@
 from airflow.models import DAG
-
+from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 from datetime import datetime
 
 # options/arguments that will be common to all the tasks in the pipeline
@@ -14,4 +14,22 @@ with DAG('user_processing',
          catchup=False) as dag:
     # Define tasks/operators
 
-    print(True)
+    # create a table in SQLite database to store users in the table
+    # the task-id must be unique within the pipeline
+    sql_command = '''
+        CREATE TABLE users (
+            --  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            firstname TEXT NOT NULL,
+            lastname TEXT NOT NULL,
+            country TEXT NOT NULL,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL,
+            email TEXT NOT NULL PRIMARY KEY
+        );
+    '''
+    # we need to define the SQLite connection at first
+    # in this case, we name it db_sqlite
+    # db_sqlite would be used to connect with the SQLite Database
+    creating_table = SqliteOperator(task_id='creating_table',
+                                    sqlite_conn_id='db_sqlite',
+                                    sql=sql_command)
