@@ -100,5 +100,5 @@ airflow connections add user_api \
 
 ### Xcom
 Xcom is a way to share data between tasks in Airflow. The `extracting_user` will create an Xcom so that the user will be stored as an Xcom in the database as a key-value pair. 
-
+![workflow](./xcom.png)
 Once the Xcom has been stored in the metastore of Airflow, you can use `xcom_pull` method to fetch the data in your function.
