@@ -1,5 +1,8 @@
 ## Section 03
 
+![workflow](./workflow_section3.png)
+
+### Update DAGs
 Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing ~/airflow/dags`
 ### Providers
 
