@@ -1,13 +1,47 @@
 from airflow.models import DAG
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 from airflow.providers.http.sensors.http import HttpSensor
+from airflow.providers.http.operators.http import SimpleHttpOperator
+from airflow.operators.python import PythonOperator
 
+import json
+import pandas as pd
+from pandas import json_normalize
 from datetime import datetime
 
 # options/arguments that will be common to all the tasks in the pipeline
 default_args = {
     'start_date': datetime(2020, 1, 1)
 }
+
+def _processing_user(ti):
+    """Extract the required information, save it as a csv file, which will be
+    used by the next task to write in the database
+    
+    Args:
+        ti: task instance object to access Xcoms
+    """
+    # fetch results/ the user that has been extracted from their previous task
+    # i.e. the SimpleHttpOperator
+    users = ti.xcom_pull(task_id=['extracting_user'])
+    
+    if not len(users) or 'results' not in users[0]:
+        raise ValueError('User is empty')
+    user = users[0]['results'][0]
+    processed_user = {
+        'firstname': user['name']['first'],
+        'lastname': user['name']['last'],
+        'country': user['location']['country'],
+        'username': user['login']['username'],
+        'password': user['login']['password'],
+        'email': user['email']
+    }
+    # create a dataframe from the json
+    processed_user: pd.DataFrame = json_normalize(processed_user)
+    
+    # save as csv
+    processed_user.to_csv('/tmp/processed_user.csv', index=None, header=False)
+    
 
 
 with DAG('user_processing',
@@ -32,14 +66,33 @@ with DAG('user_processing',
     # we need to define the SQLite connection at first
     # in this case, we name it db_sqlite
     # db_sqlite would be used to connect with the SQLite Database
-    creating_table = SqliteOperator(task_id='creating_table',
-                                    sqlite_conn_id='db_sqlite',
-                                    sql=sql_command)
+    creating_table = SqliteOperator(
+        task_id='creating_table',
+        sqlite_conn_id='db_sqlite',
+        sql=sql_command
+    )
 
     
     # check if API is available
-    is_api_available = HttpSensor(task_id='is_api_available',
-                                  http_conn_id='user_api',
-                                  endpoint='api/') # the endpoint or page to check
+    is_api_available = HttpSensor(
+        task_id='is_api_available',
+        http_conn_id='user_api',
+        endpoint='api/' # the endpoint or page to check
+    )
     
-    
+    # extract users
+    response_lambda = lambda response: json.loads(response.text)
+    extracting_user = SimpleHttpOperator(
+        task_id='extracting_user',
+        http_conn_id='user_api',
+        endpoint='api/',
+        method='GET',
+        response_filter=response_lambda, # callable to process the response
+        log_response=True # allows to see the response in log
+    )
+
+    # extract the required data from JSON response
+    processing_user = PythonOperator(
+        task_id='processing_user',
+        python_callable=_processing_user
+    )

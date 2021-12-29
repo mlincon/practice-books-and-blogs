@@ -10,6 +10,15 @@ Additional providers
 - SQLite Provider, required for `SqliteOperator`: `pip install 'apache-airflow-providers-sqlite'`
 - Http operator, requried for `SimpleHTTPOperator`: `pip install 'apache-airflow-providers-http'`
 
+To use these operators use `airflow.providers`, e.g.
+```
+from airflow.providers.sqlite.operators.sqlite import SqliteOperator
+from airflow.providers.http.sensors.http import HttpSensor
+from airflow.providers.http.operators.http import SimpleHttpOperator
+```
+
+Note that `PythonOperator` or `BashOperator` is available by default and can be accessed from `airflow.operators` directly (without `providers`).
+
 List all providers:
 ```
 airflow providers list
@@ -88,3 +97,8 @@ airflow connections add user_api \
     --conn-description "API for getting users" \
     --conn-host https://randomuser.me/
 ```
+
+### Xcom
+Xcom is a way to share data between tasks in Airflow. The `extracting_user` will create an Xcom so that the user will be stored as an Xcom in the database as a key-value pair. 
+
+Once the Xcom has been stored in the metastore of Airflow, you can use `xcom_pull` method to fetch the data in your function.
