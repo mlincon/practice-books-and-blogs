@@ -1,6 +1,6 @@
 ## Section 03
 
-![workflow](./workflow_section3.png)
+![workflow](doc/workflow_section3.png)
 
 ### Update DAGs
 Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing.py ~/airflow/dags`
@@ -8,7 +8,7 @@ Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing.p
 
 Additional providers
 - SQLite Provider, required for `SqliteOperator`: `pip install 'apache-airflow-providers-sqlite'`
-- Http operator, requried for `SimpleHTTPOperator`: `pip install 'apache-airflow-providers-http'`
+- Http operator, requried for `SimpleHttpOperator`: `pip install 'apache-airflow-providers-http'`
 
 To use these operators use `airflow.providers`, e.g.
 ```
