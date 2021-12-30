@@ -3,7 +3,7 @@
 ![workflow](./workflow_section3.png)
 
 ### Update DAGs
-Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing ~/airflow/dags`
+Remember to copy over the files to `~/airflow/dags`, e.g., `cp user_processing.py ~/airflow/dags`
 ### Providers
 
 Additional providers
@@ -34,7 +34,7 @@ airflow providers list
 It is recommended to test a task after creating it.
 
 ###### Example: Create a user table
-Test a specific task without checking for dependencies or storing metadata using `airflow tasks test <dag-id> <task-id> <execution-date`, where the `execution-date` is a date from the past, e.g.
+Test a specific task without checking for dependencies or storing metadata using `airflow tasks test <dag-id> <task-id> <execution-date>`, where the `execution-date` is a date from the past, e.g.
 ```
 airflow tasks test user_processing creating_table 2021-01-01
 ```
