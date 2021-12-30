@@ -3,6 +3,7 @@ from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 
 import json
 import pandas as pd
@@ -52,8 +53,8 @@ with DAG('user_processing',
 
     # create a table in SQLite database to store users in the table
     # the task-id must be unique within the pipeline
-    sql_command = '''
-        CREATE TABLE users (
+    _sql_command = '''
+        CREATE TABLE IF NOT EXISTS users (
             --  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             firstname TEXT NOT NULL,
             lastname TEXT NOT NULL,
@@ -69,7 +70,7 @@ with DAG('user_processing',
     creating_table = SqliteOperator(
         task_id='creating_table',
         sqlite_conn_id='db_sqlite',
-        sql=sql_command
+        sql=_sql_command
     )
 
     
@@ -81,13 +82,13 @@ with DAG('user_processing',
     )
     
     # extract users
-    response_lambda = lambda response: json.loads(response.text)
+    _response_lambda = lambda response: json.loads(response.text)
     extracting_user = SimpleHttpOperator(
         task_id='extracting_user',
         http_conn_id='user_api',
         endpoint='api/',
         method='GET',
-        response_filter=response_lambda, # callable to process the response
+        response_filter=_response_lambda, # callable to process the response
         log_response=True # allows to see the response in log
     )
 
@@ -96,3 +97,16 @@ with DAG('user_processing',
         task_id='processing_user',
         python_callable=_processing_user
     )
+
+    # store extracted user in database
+    _bash_command='''
+    echo -e ".separator ","\n.import /tmp/processed_user.csv users" | sqlite3 ~/airflow/airflow.db
+    '''
+    storing_user = BashOperator(
+        task_id='storing_user',
+        bash_command=_bash_command
+    )
+
+
+    # dependencies
+    creating_table >> is_api_available >> extracting_user >> processing_user >> storing_user
