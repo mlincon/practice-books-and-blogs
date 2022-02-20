@@ -1,2 +1,4 @@
-## MLflow
-**/mlruns
+# Mlflow
+mlruns/
+mlartifacts/
+outputs/

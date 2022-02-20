@@ -1,0 +1,6 @@
+name: btc_prediction
+docker_env:
+    image: btc_pred
+entry_points:
+    main:
+        command: "python3 train.py"
