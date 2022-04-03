@@ -47,7 +47,7 @@ def prepare_training_data(data: pd.DataFrame) -> pd.DataFrame:
         if n > 0:
             return 1
         return 0
-
+        
     data['Delta'] = data['Close'] - data['Open']
     data['to_predict'] = data['Delta'].apply(lambda d: _digitize(d))
     return data

@@ -1,10 +1,14 @@
-FROM continuumio/miniconda3:4.10.3p0-alpine
+FROM python:3.9-slim-bullseye AS builder
 
-RUN pip install mlflow>=1.18.0 \
-    && pip install numpy \
-    && pip install scipy \
-    && pip install pandas \
-    && pip install scikit-learn \
-    && pip install cloudpickle \
-    && pip install pandas_datareader==0.10.0 \
-    && pip install yfinance
+# setup virtualenv, copy and install requirements
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+FROM python:3.9-slim-bullseye
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
