@@ -47,7 +47,7 @@ def prepare_training_data(data: pd.DataFrame) -> pd.DataFrame:
         if n > 0:
             return 1
         return 0
-        
+
     data['Delta'] = data['Close'] - data['Open']
     data['to_predict'] = data['Delta'].apply(lambda d: _digitize(d))
     return data
@@ -88,6 +88,7 @@ if __name__ == "__main__":
         predicted = clf.predict(X_test)
 
         # explicitly task MLflow to log the random forest model and chosen metrics
+        # a folder named "model_random_forest" is created inside the "artifacts"
         mlflow.sklearn.log_model(clf, "model_random_forest")
 
         print(classification_report(y_test, predicted))
