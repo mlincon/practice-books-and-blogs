@@ -27,9 +27,12 @@ Generated via `tree -I '__pycache__'`
 
 To start first create environment variable for Flask:
 
-```
+```bash
 export FLASK_APP=main.py
+flask run
 ```
+
+To open GraphQL Playground, go to `http://127.0.0.1:5000/graphql`
 
 #### Queries
 
