@@ -1,8 +1,11 @@
 #### Source
+
 https://www.twilio.com/blog/graphql-api-python-flask-ariadne
 
 #### Struture
+
 Generated via `tree -I '__pycache__'`
+
 ```
 .
 ├── readme.md
@@ -21,13 +24,17 @@ Generated via `tree -I '__pycache__'`
 ```
 
 #### Start
+
 To start first create environment variable for Flask:
+
 ```
 export FLASK_APP=main.py
 ```
 
 #### Queries
+
 Fetch all:
+
 ```graphql
 query fetchAllTodos {
   todos {
@@ -43,21 +50,29 @@ query fetchAllTodos {
 ```
 
 Fetch one item:
+
 ```graphql
 query fetchTodo {
   todo(todoId: "1") {
     success
     errors
-    todo { id completed description dueDate }
+    todo {
+      id
+      completed
+      description
+      dueDate
+    }
   }
 }
 ```
 
 #### Mutations
+
 Create entry
+
 ```graphql
 mutation newTodo {
-  createTodo(description:"Go to the dentist", dueDate:"24-10-2020") {
+  createTodo(description: "Go to the dentist", dueDate: "24-10-2020") {
     success
     errors
     todo {
@@ -65,6 +80,45 @@ mutation newTodo {
       completed
       description
     }
+  }
+}
+```
+
+Mark Done
+
+```graphql
+mutation markDone {
+  markDone(todoId: "1") {
+    success
+    errors
+    todo {
+      id
+      completed
+      description
+      dueDate
+    }
+  }
+}
+```
+
+Delete item
+
+```graphql
+mutation {
+  deleteTodo(todoId: "1") {
+    success
+    errors
+  }
+}
+```
+
+Update due date
+
+```graphql
+mutation updateDueDate {
+  updateDueDate(todoId: "2", newDate: "25-10-2020") {
+    success
+    errors
   }
 }
 ```

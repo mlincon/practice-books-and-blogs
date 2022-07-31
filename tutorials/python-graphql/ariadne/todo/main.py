@@ -14,6 +14,9 @@ from flask import jsonify
 from todo.api.queries import resolve_todos
 from todo.api.queries import resolve_todo
 from todo.api.mutations import resolve_create_todo
+from todo.api.mutations import resolve_mark_done
+from todo.api.mutations import resolve_delete_todo
+from todo.api.mutations import resolve_update_due_date
 
 query = ObjectType("Query")
 
@@ -22,6 +25,9 @@ query.set_field("todo", resolve_todo)
 
 mutation = ObjectType("Mutation")
 mutation.set_field("createTodo", resolve_create_todo)
+mutation.set_field("markDone", resolve_mark_done)
+mutation.set_field("deleteTodo", resolve_delete_todo)
+mutation.set_field("updateDueDate", resolve_update_due_date)
 
 type_defs: str = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
