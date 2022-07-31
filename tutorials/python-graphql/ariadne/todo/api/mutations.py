@@ -54,7 +54,7 @@ def resolve_delete_todo(obj, info, todo_id):
     except AttributeError:
         payload = {
             "success": False,
-            "errors": [f"Todo matching id {todo_id} not found"]
+            "errors": [f"Todo matching id {todo_id} not found"],
         }
 
     return payload
@@ -65,23 +65,22 @@ def resolve_update_due_date(obj, info, todo_id, new_date):
     try:
         todo = Todo.query.get(todo_id)
         if todo:
-            todo.due_date = datetime.strptime(new_date, '%d-%m-%Y').date()
+            todo.due_date = datetime.strptime(new_date, "%d-%m-%Y").date()
         db.session.add(todo)
         db.session.commit()
-        payload = {
-            "success": True,
-            "todo": todo.to_dict()
-        }
+        payload = {"success": True, "todo": todo.to_dict()}
 
     except ValueError:  # date format errors
         payload = {
             "success": False,
-            "errors": ["Incorrect date format provided. Date should be in "
-                       "the format dd-mm-yyyy"]
+            "errors": [
+                "Incorrect date format provided. Date should be in "
+                "the format dd-mm-yyyy"
+            ],
         }
     except AttributeError:  # todo not found
         payload = {
             "success": False,
-            "errors": [f"Todo matching id {todo_id} not found"]
+            "errors": [f"Todo matching id {todo_id} not found"],
         }
     return payload

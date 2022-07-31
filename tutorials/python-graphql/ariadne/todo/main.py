@@ -31,23 +31,20 @@ mutation.set_field("updateDueDate", resolve_update_due_date)
 
 type_defs: str = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
-    type_defs, query, mutation, snake_case_fallback_resolvers # type: ignore (pylance error)
+    type_defs, query, mutation, snake_case_fallback_resolvers  # type: ignore (pylance error)
 )
+
 
 @app.route("/graphql", methods=["GET"])
 def graphql_playground():
     return PLAYGROUND_HTML, 200
 
+
 @app.route("/graphql", methods=["POST"])
 def graphql_server():
     data = request.get_json()
 
-    success, result = graphql_sync(
-        schema,
-        data,
-        context_value=request,
-        debug=app.debug
-    )
+    success, result = graphql_sync(schema, data, context_value=request, debug=app.debug)
 
     status_code = 200 if success else 400
     return jsonify(result), status_code
