@@ -13,16 +13,19 @@ from flask import jsonify
 
 from todo.api.queries import resolve_todos
 from todo.api.queries import resolve_todo
-
+from todo.api.mutations import resolve_create_todo
 
 query = ObjectType("Query")
 
 query.set_field("todos", resolve_todos)
 query.set_field("todo", resolve_todo)
 
+mutation = ObjectType("Mutation")
+mutation.set_field("createTodo", resolve_create_todo)
+
 type_defs: str = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
-    type_defs, query, snake_case_fallback_resolvers # type: ignore (pylance error)
+    type_defs, query, mutation, snake_case_fallback_resolvers # type: ignore (pylance error)
 )
 
 @app.route("/graphql", methods=["GET"])
