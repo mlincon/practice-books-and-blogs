@@ -1,5 +1,5 @@
-from todo_api.api import app, db
-from todo_api.api import models
+from todo.api import app, db
+from todo.api import models
 
 from ariadne import load_schema_from_path
 from ariadne import make_executable_schema
@@ -11,7 +11,7 @@ from ariadne.constants import PLAYGROUND_HTML
 from flask import request
 from flask import jsonify
 
-from todo_api.api.queries import resolve_todos
+from todo.api.queries import resolve_todos
 
 
 query = ObjectType("Query")

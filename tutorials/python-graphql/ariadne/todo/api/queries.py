@@ -1,4 +1,4 @@
-from todo_api.api.models import Todo
+from todo.api.models import Todo
 
 def resolve_todos(obj, info) -> dict:
     try:
