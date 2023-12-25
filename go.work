@@ -6,4 +6,5 @@ use (
 	./books/James_learn-go-with-tests/go-fundamentals/03_iteration
 	./books/James_learn-go-with-tests/go-fundamentals/04_arrays-and-slices
 	./books/James_learn-go-with-tests/go-fundamentals/05_structs_methods_interface
+	./books/James_learn-go-with-tests/go-fundamentals/08_dependency_injection
 )
