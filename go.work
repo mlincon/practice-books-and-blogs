@@ -1,0 +1,9 @@
+go 1.21.5
+
+use (
+	./books/James_learn-go-with-tests/go-fundamentals/01_hello-world
+	./books/James_learn-go-with-tests/go-fundamentals/02_integers
+	./books/James_learn-go-with-tests/go-fundamentals/03_iteration
+	./books/James_learn-go-with-tests/go-fundamentals/04_arrays-and-slices
+	./books/James_learn-go-with-tests/go-fundamentals/05_structs_methods_interface
+)
