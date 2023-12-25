@@ -1,6 +1,7 @@
 go 1.21.5
 
 use (
+	./books/James_learn-go-with-tests/application/01_http_server
 	./books/James_learn-go-with-tests/go-fundamentals/01_hello-world
 	./books/James_learn-go-with-tests/go-fundamentals/02_integers
 	./books/James_learn-go-with-tests/go-fundamentals/03_iteration
