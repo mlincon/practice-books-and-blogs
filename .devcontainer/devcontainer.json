@@ -40,7 +40,9 @@
         "editor.linkedEditing": true,
         "html.format.wrapLineLength": 100,
         "[json]": {
-          "editor.defaultFormatter": "vscode.json-language-features"
+          "editor.defaultFormatter": "vscode.json-language-features",
+          "editor.indentSize": "tabSize",
+          "editor.tabSize": 4
         },
         "[jsonc]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
