@@ -21,3 +21,4 @@ The original source is always mentioned in the either the file name or inside th
 | Commit key | Author  | Course Name | Year | Web link | Folder Link |
 |------------|---------|-----------|------|----------|-----------------|
 |lamberti| Marc Lamberti | The Complete Handa-On Introduction to Apache Airflow | 2021| [Link](https://www.udemy.com/course/the-complete-hands-on-course-to-master-apache-airflow/) | [Link](https://github.com/mlincon/practice-books-and-blogs/tree/master/courses/Lamberti-airflow)|
+|marco| Eden Marco | LlamaIndex - Develop LLM powered applications with LlamaIndex | 2024| [Link](https://www.udemy.com/course/lamaindex/) | [Link](https://github.com/mlincon/practice-books-and-blogs/tree/main/courses/Marco-LlamaIndex)|
