@@ -2,6 +2,7 @@
 
 # Install pre-commit for git hook
 echo "(*) Installing pre-commit requirements ..."
+pip install --upgrade pip
 pip install \
     "isort==5.12.0" \
     "pre-commit==3.5.0" \
