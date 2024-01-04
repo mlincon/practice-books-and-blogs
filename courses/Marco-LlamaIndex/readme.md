@@ -8,4 +8,7 @@ pip list --format=freeze > requirements.txt
 ```
 
 ### Refs:
+
 - https://colab.research.google.com/drive/19xBNmejiJUhWIy71bWFnlL1H-O-hjTbW?usp=sharing
+- https://github.com/karan-nanonets/llamaindex-guide
+- https://nanonets.com/blog/llamaindex/

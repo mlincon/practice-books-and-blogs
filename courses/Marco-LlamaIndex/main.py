@@ -13,6 +13,6 @@ def main(urls: list[str]) -> None:
 if __name__ == "__main__":
     main(
         urls=[
-            "https://cbarkinozer.medium.com/an-overview-of-the-llamaindex-framework-9ee9db787d16",
+            "https://nanonets.com/blog/llamaindex/",
         ]
     )
