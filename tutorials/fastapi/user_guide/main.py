@@ -1,11 +1,10 @@
 """Beginners introduction to FastAPI"""
 
-from ModelName import ModelName
-from MockDB import items_db
-
 from typing import Union
-from fastapi import FastAPI
 
+from fastapi import FastAPI
+from MockDB import items_db
+from ModelName import ModelName
 
 app = FastAPI()
 
@@ -31,16 +30,10 @@ async def get_model(model_name: ModelName):
     """Get the name of the model based on the ModelName class"""
 
     if model_name == ModelName.alexnet:
-        return {
-            "model_name": model_name,
-            "message": "Deep Learning model"
-        }
-    
+        return {"model_name": model_name, "message": "Deep Learning model"}
+
     if model_name.value == "lenet":
-        return {
-            "model_name": model_name,
-            "message": "LeCNN all the images"
-        }
+        return {"model_name": model_name, "message": "LeCNN all the images"}
 
     return {"model_name": model_name, "message": "Have some residuals"}
 

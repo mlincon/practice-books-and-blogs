@@ -4,14 +4,14 @@ generated using Kedro 0.17.7
 """
 
 import logging
-logger = logging.getLogger(__name__)
-
 from typing import Dict, Tuple
 
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
+
+logger = logging.getLogger(__name__)
 
 
 def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
@@ -31,7 +31,9 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     return X_train, X_test, y_train, y_test
 
 
-def train_linear_regression(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
+def train_linear_regression(
+    X_train: pd.DataFrame, y_train: pd.Series
+) -> LinearRegression:
     """Trains the linear regression model.
 
     Args:

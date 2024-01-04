@@ -1,5 +1,10 @@
 from kedro.pipeline import node
-from .training_steps import evaluate_linear_regression_model, split_data, train_linear_regression
+
+from .training_steps import (
+    evaluate_linear_regression_model,
+    split_data,
+    train_linear_regression,
+)
 
 split_data_node: node = node(
     name="split_data_node",
