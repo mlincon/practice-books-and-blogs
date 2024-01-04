@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
 from llama_index import VectorStoreIndex
 from llama_index.readers import SimpleWebPageReader
+
+load_dotenv()
 
 
 def main(urls: list[str]) -> None:
