@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.api
     ports:
-      - "5000:5000"
+      - 5000:5000
     volumes:
       - ./api/:/api
 
@@ -15,11 +15,11 @@ services:
       context: .
       dockerfile: Dockerfile.web
     ports:
-      - "8080:8080"
+      - 8080:8080
 
   redis:
     build:
       context: .
       dockerfile: Dockerfile.redis
     ports:
-      - "6379:6379"
+      - 6379:6379
