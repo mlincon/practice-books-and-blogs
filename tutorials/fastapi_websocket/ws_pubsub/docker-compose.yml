@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api/:/api
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "8080:8080"
+
+  redis:
+    build:
+      context: .
+      dockerfile: Dockerfile.redis
+    ports:
+      - "6379:6379"

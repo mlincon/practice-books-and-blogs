@@ -1,0 +1,30 @@
+FROM python:3.11-slim AS builder
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# hadolint ignore=DL3045
+COPY requirements.txt .
+
+# hadolint ignore=DL3013,DL3042
+RUN pip install --upgrade pip && \
+    pip install --disable-pip-version-check --no-cache-dir -r requirements.txt
+
+
+FROM python:3.11-slim AS api
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+EXPOSE 5000
+
+RUN groupadd -g 10001 -r nonroot && \
+    useradd -u 10000 --no-log-init -r -g nonroot nonroot
+
+RUN mkdir api
+
+WORKDIR /api
+
+COPY --chown=nonroot:nonroot ./api/. /api/
+
+CMD ["sh", "run.sh"]

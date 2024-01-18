@@ -1,0 +1,7 @@
+FROM ghcr.io/nginxinc/nginx-unprivileged:alpine AS proxy
+
+COPY ./web/index.html /usr/share/nginx/html
+
+EXPOSE 8080
+
+CMD [ "nginx", "-g", "daemon off";]
